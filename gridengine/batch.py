@@ -70,7 +70,7 @@ class Job:
                 print('\rwaiting for ' + str(running) + ' of ' + str(self.last_task_id+1) + ' tasks to fininsh', end="")
                 time.sleep(1)
             else:
-                print('All tasks completed! Now let´s reduce...')
+                print('All tasks completed!')
                 done = True
 
 
