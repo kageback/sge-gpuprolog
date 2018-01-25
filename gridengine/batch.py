@@ -59,17 +59,20 @@ class Job:
         while(not done):
 
             proc = subprocess.Popen('qstat', stdout=subprocess.PIPE)
-            proc.wait()
-            proc.stdout.readline()
-            proc.stdout.readline()
-            out = proc.stdout.readline()
-            done = True
-            while(out != b''):
+            stdout, stderr = proc.communicate()
+            lines = stdout.split(b'\n')
+
+            running = 0
+            for line in lines[2:]:
                 if int(out.split()[0]) in self.ge_job_ids.values():
-                    done = False
-                    break
-                out = proc.stdout.readline()
-            time.sleep(1)
+                    running += 1
+            if running > 0:
+                print('waiting for', running, 'tasks to fininsh', end="\r")
+                time.sleep(1)
+            else:
+                print('All tasks completed! Now let´s reduce...')
+                done = True
+
 
 
     def erase_job(self):
