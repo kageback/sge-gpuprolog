@@ -63,11 +63,11 @@ class Job:
             lines = stdout.split(b'\n')
 
             running = 0
-            for line in lines[2:]:
-                if int(out.split()[0]) in self.ge_job_ids.values():
+            for line in lines[2:-1]:
+                if int(line.split()[0]) in self.ge_job_ids.values():
                     running += 1
             if running > 0:
-                print('waiting for', running, 'tasks to fininsh', end="\r")
+                print('\rwaiting for ' + str(running) + ' of ' + str(self.last_task_id+1) + ' tasks to fininsh', end="")
                 time.sleep(1)
             else:
                 print('All tasks completed! Now let´s reduce...')
