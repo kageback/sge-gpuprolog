@@ -76,7 +76,6 @@ class Job:
 
 
     def erase_job(self):
-        #os.remove(self.job_dir)
         os.rmdir(self.job_dir)
 
 
